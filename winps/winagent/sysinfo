@@ -1,0 +1,17 @@
+Get PC Info
+Write-Host "Get-PCInfo" *>&1
+Function Get-PCInfo
+{
+    param([String] $OutPath)
+
+    $pc_infos = New-Object System.Collections.ArrayList
+    $Hotfix = Get-HotFix -ComputerName localhost | Select-Object * 
+
+
+    $computerOS = Get-CimInstance CIM_OperatingSystem | Select-Object * 
+    $_1 = $pc_infos.Add($computerOS)
+
+    $pc_infos | ConvertTo-Json | Out-File -FilePath "$($OutPath)\$($ip)_PCInfo.json" -Encoding utf8
+    Transfer-Session -HostName $FTPHOST -FilePath "$($OutPath)\$($ip)_PCInfo.json" -Option UploadFile      
+}
+Get-PCInfo $CURPATH

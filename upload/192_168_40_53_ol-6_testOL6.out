@@ -1,0 +1,39 @@
+{"CIS_TEST_ID":"5_4_1_4","CIS_TEST_NAME":"Ensure inactive password lock is 30 days or less","CIS_TEST_STATUS":"FAILURE"}
+{"CIS_TEST_ID":"4_2_4","CIS_TEST_NAME":"Ensure permissions on all logfiles are configured","CIS_TEST_STATUS":"FAILURE"}
+{"CIS_TEST_ID":"1_7_1_5","CIS_TEST_NAME":"Ensure permissions on /etc/issue are configured","CIS_TEST_STATUS":"SUCCESS"}
+{"CIS_TEST_ID":"1_7_1_1","CIS_TEST_NAME":"Ensure message of the day is configured properly","CIS_TEST_STATUS":"SUCCESS"}
+{"CIS_TEST_ID":"5_4_1_1","CIS_TEST_NAME":"Ensure password expiration is 365 days or less","CIS_TEST_STATUS":"FAILURE"}
+{"CIS_TEST_ID":"5_2_13","CIS_TEST_NAME":"Ensure SSH LoginGraceTime is set to one minute or less","CIS_TEST_STATUS":"FAILURE"}
+{"CIS_TEST_ID":"5_4_5","CIS_TEST_NAME":"Ensure default user shell timeout is 900 seconds or less","CIS_TEST_STATUS":"FAILURE"}
+{"CIS_TEST_ID":"5_2_1","CIS_TEST_NAME":"Ensure permissions on /etc/ssh/sshd_config are configured","CIS_TEST_STATUS":"SUCCESS"}
+{"CIS_TEST_ID":"5_2_4","CIS_TEST_NAME":"Ensure SSH X11 forwarding is disabled","CIS_TEST_STATUS":"FAILURE"}
+{"CIS_TEST_ID":"4_2_1_4","CIS_TEST_NAME":"Ensure rsyslog is configured to send logs to a remote log host","CIS_TEST_STATUS":"FAILURE"}
+{"CIS_TEST_ID":"4_2_2_1","CIS_TEST_NAME":"Ensure syslog-ng service is enabled","CIS_TEST_STATUS":"FAILURE"}
+{"CIS_TEST_ID":"5_4_1_2","CIS_TEST_NAME":"Ensure minimum days between password changes is 7 or more","CIS_TEST_STATUS":"FAILURE"}
+{"CIS_TEST_ID":"5_4_1_3","CIS_TEST_NAME":"Ensure password expiration warning days is 7 or more","CIS_TEST_STATUS":"SUCCESS"}
+{"CIS_TEST_ID":"3_6_1","CIS_TEST_NAME":"Ensure iptables is installed","CIS_TEST_STATUS":"SUCCESS"}
+{"CIS_TEST_ID":"5_2_11","CIS_TEST_NAME":"Ensure only approved MAC algorithms are used","CIS_TEST_STATUS":"FAILURE"}
+{"CIS_TEST_ID":"5_2_7","CIS_TEST_NAME":"Ensure SSH HostbasedAuthentication is disabled","CIS_TEST_STATUS":"FAILURE"}
+{"CIS_TEST_ID":"4_2_1_1","CIS_TEST_NAME":"Ensure rsyslog Service is enabled","CIS_TEST_STATUS":"FAILURE"}
+{"CIS_TEST_ID":"5_2_12","CIS_TEST_NAME":"Ensure SSH Idle Timeout Interval is configured","CIS_TEST_STATUS":"FAILURE"}
+{"CIS_TEST_ID":"1_4_3","CIS_TEST_NAME":"Ensure authentication required for single user mode","CIS_TEST_STATUS":"SUCCESS"}
+{"CIS_TEST_ID":"5_2_3","CIS_TEST_NAME":"Ensure SSH LogLevel is set to INFO","CIS_TEST_STATUS":"FAILURE"}
+{"CIS_TEST_ID":"4_2_1_3","CIS_TEST_NAME":"Ensure rsyslog default file permissions configured","CIS_TEST_STATUS":"FAILURE"}
+{"CIS_TEST_ID":"1_1_11","CIS_TEST_NAME":"Ensure separate partition exists for /var/log","CIS_TEST_STATUS":"FAILURE"}
+{"CIS_TEST_ID":"5_4_3","CIS_TEST_NAME":" Ensure default group for the root account is GID 0","CIS_TEST_STATUS":"SUCCESS"}
+{"CIS_TEST_ID":"5_2_9","CIS_TEST_NAME":"Ensure SSH PermitEmptyPasswords is disabled","CIS_TEST_STATUS":"FAILURE"}
+{"CIS_TEST_ID":"5_4_1_5","CIS_TEST_NAME":"Ensure all users last password change date is in the past","CIS_TEST_STATUS":"SUCCESS"}
+{"CIS_TEST_ID":"5_2_2","CIS_TEST_NAME":"Ensure SSH Protocol is set to 2","CIS_TEST_STATUS":"SUCCESS"}
+{"CIS_TEST_ID":"5_2_5","CIS_TEST_NAME":"Ensure SSH MaxAuthTries is set to 4 or less","CIS_TEST_STATUS":"FAILURE"}
+{"CIS_TEST_ID":"5_2_15","CIS_TEST_NAME":"Ensure SSH warning banner is configured","CIS_TEST_STATUS":"FAILURE"}
+{"CIS_TEST_ID":"5_2_10","CIS_TEST_NAME":"Ensure SSH PermitUserEnvironment is disabled","CIS_TEST_STATUS":"FAILURE"}
+{"CIS_TEST_ID":"3_6_3","CIS_TEST_NAME":"Ensure loopback traffic is configured","CIS_TEST_STATUS":"FAILURE"}
+{"CIS_TEST_ID":"5_4_2","CIS_TEST_NAME":"Ensure system accounts are non-login","CIS_TEST_STATUS":"SUCCESS"}
+{"CIS_TEST_ID":"3_6_2","CIS_TEST_NAME":"Ensure default deny firewall policy","CIS_TEST_STATUS":"FAILURE"}
+{"CIS_TEST_ID":"1_1_12","CIS_TEST_NAME":"Ensure separate partition exists for /var/log/audit","CIS_TEST_STATUS":"FAILURE"}
+{"CIS_TEST_ID":"5_2_14","CIS_TEST_NAME":"Ensure SSH access is limited","CIS_TEST_STATUS":"FAILURE"}
+{"CIS_TEST_ID":"5_2_8","CIS_TEST_NAME":"Ensure SSH root login is disabled","CIS_TEST_STATUS":"FAILURE"}
+{"CIS_TEST_ID":"1_7_2","CIS_TEST_NAME":"Ensure GDM login banner is configured","CIS_TEST_STATUS":"SUCCESS"}
+{"CIS_TEST_ID":"4_2_3","CIS_TEST_NAME":"Ensure rsyslog or syslog-ng is installed","CIS_TEST_STATUS":"SUCCESS"}
+{"CIS_TEST_ID":"5_4_4","CIS_TEST_NAME":"Ensure default user umask is 027 or more restrictive","CIS_TEST_STATUS":"FAILURE"}
+{"CIS_TEST_ID":"5_2_6","CIS_TEST_NAME":"Ensure SSH IgnoreRhosts is enabled","CIS_TEST_STATUS":"FAILURE"}
