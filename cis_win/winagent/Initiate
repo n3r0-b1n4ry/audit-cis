@@ -1,0 +1,236 @@
+# create log file
+if (Test-Path -Path $filelog)
+{
+    Remove-Item -Path $filelog
+    New-Item -ItemType "file" -Path $filelog | Out-Null
+}
+else
+{
+    New-Item -ItemType "file" -Path $filelog | Out-Null
+}
+
+function Transfer-Session()
+{
+    param (
+        [Parameter(Mandatory, HelpMessage="Enter IP Address or HostName of remote server. e.g: 10.63.1.212 or example.com")]
+        [ValidateNotNullOrEmpty()]
+        [String] $HostName = $FTPHOST,
+
+        [Parameter(HelpMessage = "Enter Port to connect FTP Server")]
+        [String] $Port = $port_ftp,
+        
+        [Parameter(HelpMessage = "Enter FullPath of file need to Upload")]
+        [ValidateNotNullOrEmpty()]
+        [String] $FilePath,
+        
+        [Parameter(HelpMessage = "Enter the directory to receive file")]
+        [ValidateNotNullOrEmpty()]
+        [String] $DestPath,
+        
+        [Parameter(Mandatory, HelpMessage = "Choose UploadFile or DownloadFile")]
+        [ValidateNotNullOrEmpty()]
+        [ValidateSet("UploadFile","DownloadFile")]
+        $Option
+    )
+
+    Write-Verbose "$($Option) mode." *>&1
+    switch ($Option)
+    {
+        "UploadFile"
+        {
+            Write-Host "Start read bytes!"
+            $bytes = [System.IO.File]::ReadAllBytes($FilePath)
+            Write-Host "End read bytes!"
+            Write-Host "Start encode"
+            $swEncode = [System.Diagnostics.Stopwatch]::StartNew()
+            $file_content_template = [convert]::ToBase64String($bytes)
+            $swEncode.Stop()
+            Write-Host "Encode complete!"
+            $body = @{
+                "filename" =$((Get-ItemProperty -Path $FilePath).Name);
+                "data"=$file_content_template;
+            }
+                try {
+                    $URI = $HostName + ":$Port/upload"
+                    $req = Invoke-WebRequest -Uri $URI -UseBasicParsing -Method Post -DisableKeepAlive -TimeoutSec 30 -Headers @{'Content-Type'='application/json';} -Body ($body|ConvertTo-Json)
+                    if ($null -ne $req.StatusCode -or $req.StatusCode -ne "")
+                    {
+                        if ($req.StatusCode -eq 200)
+                        {
+                            Write-Host "Request sent successfully!" -ForegroundColor "Yellow" *>&1
+                            Write-Verbose $req *>&1
+                            $flag = $false
+                            break
+                        }
+                        else
+                        {
+                            Write-Host "Request failed, more detail:" -ForegroundColor "Red" *>&1
+                            Write-Host "Server IP: $($serverip) Port: $($Port)" -ForegroundColor "Red" *>&1
+                            Write-Host "Data: $($Data)" -ForegroundColor "Red" *>&1
+                            $flag = $false
+                            break
+                        }
+                    }            
+                }
+                catch {
+                    Write-Host "Request failed, more detail:" -ForegroundColor "Red" *>&1
+                    Write-Host "Server IP: $($serverip) Port: $($Port)" -ForegroundColor "Red" *>&1
+                    Write-Host "Data: $($Data)" -ForegroundColor "Red" *>&1
+                    $flag = $false
+                    break
+                }
+            break
+        }  
+        "DownloadFile"
+        {
+            Write-Host $token
+            if ((Test-Path -Path $DestPath) -ne $true)
+            {
+                New-Item -Path $DestPath -ItemType "directory" -Force
+            }
+
+            $URI = $HostName + ":$Port" + $FilePath
+            try {
+                Write-Host $URI
+                $req = Invoke-WebRequest -Uri $URI -UseBasicParsing -Method Post -DisableKeepAlive -TimeoutSec 300 -Headers @{'tenant' = $tenant; 'token' = $token; "os" = "win";} -Outfile (Join-Path -Path $DestPath -ChildPath tools.zip)
+                if ($null -ne $req.StatusCode -or $req.StatusCode -ne "")
+                {
+                    if ($req.StatusCode -eq 200)
+                    {
+                        Write-Host "Request sent successfully!" -ForegroundColor "Yellow" *>&1
+                        Write-Verbose $req *>&1
+                        $flag = $false
+                        break
+                    }
+                    else
+                    {
+                        Write-Host "Request failed, more detail:" -ForegroundColor "Red" *>&1
+                        Write-Host "Server IP: $($serverip) Port: $($Port)" -ForegroundColor "Red" *>&1
+                        Write-Host "Data: $($Data)" -ForegroundColor "Red" *>&1
+                        $flag = $false
+                        break
+                    }
+                }            
+            }
+            catch {
+                Write-Host "Request failed, more detail:" -ForegroundColor "Red" *>&1
+                Write-Host "Server IP: $($serverip) Port: $($Port)" -ForegroundColor "Red" *>&1
+                Write-Host "Data: $($Data)" -ForegroundColor "Red" *>&1
+                $flag = $false
+                break
+            }
+            
+            break
+        }   
+        Default
+        {
+            Write-Error "Please choose option: UploadFile or DownloadFile" *>&1
+            return
+        }
+    }
+
+    $log_ftp = "$(Get-Date -Format '[dd-MM-yyyy HH:mm:ss]')`n"
+    try 
+    {
+        Write-Verbose $log_ftp *>&1
+        if ($log_ftp -match "success")
+        {
+            Write-Host "Transfer complete." *>&1
+            switch ($Option)
+            {
+                "UploadFile"
+                {
+                    Write-Host "Upload $($FilePath) successfully." -ForegroundColor "Yellow" *>&1
+                    break
+                }
+                "DownloadFile"
+                {
+                    Write-Host "Download $($FilePath) successfully." -ForegroundColor "Yellow" *>&1
+                    break
+                }
+            }
+        }
+        else
+        {
+            Write-Host $log_ftp *>&1
+            Write-Host "Transfer failed." *>&1
+        }
+    }
+    catch [System.Exception]
+    {
+        Write-Error $_ *>&1
+        return
+    }
+    catch
+    {
+        switch ($Option) {
+            "UploadFile" 
+            {
+                Write-Host "Upload $($FilePath) has been interupted, Sonething went wrong" *>&1
+            }
+            "DownloadFile"
+            {
+                Write-Host "Download $($FilePath) has been interupted, Sonething went wrong" *>&1
+            }
+        }
+    }
+    finally
+    {
+        Out-File -FilePath "ftp_session.log" -InputObject $log_ftp -Encoding ascii -Append -Force
+        Remove-Item -Path "session.tmp" -Force -ErrorAction Ignore
+    }
+}
+
+function Req-Post
+{
+    param(
+            [Parameter(Mandatory, HelpMessage="Enter URI to request")]
+            [String] $serverip,
+
+            [Parameter(HelpMessage="Enter Param\Data in Body")]
+            [String] $Data,
+
+            [Parameter(HelpMessage="Enter the port to connect")]
+            [String] $Port = $port_api
+         )
+    
+    if ($checking_network -and $checking_api_network_fault)
+    {
+        return
+    }
+
+    $flag = $true
+    $URI = $serverip + ":$($Port)/?url=Controller/status"
+    while ($flag)
+    {
+        try {
+            $req = Invoke-WebRequest -Uri $URI -UseBasicParsing -Method Post -DisableKeepAlive -TimeoutSec 20 -Body $Data
+            if ($null -ne $req.StatusCode -or $req.StatusCode -ne "")
+            {
+                if ($req.StatusCode -eq 200)
+                {
+                    Write-Host "Request sent successfully!" -ForegroundColor "Yellow" *>&1
+                    Write-Verbose $req *>&1
+                    $flag = $false
+                    break
+                }
+                else
+                {
+                    Write-Host "Request failed, more detail:" -ForegroundColor "Red" *>&1
+                    Write-Host "Server IP: $($serverip) Port: $($Port)" -ForegroundColor "Red" *>&1
+                    Write-Host "Data: $($Data)" -ForegroundColor "Red" *>&1
+                    $flag = $false
+                    break
+                }
+            }            
+        }
+        catch {
+            Write-Host "Request failed, more detail:" -ForegroundColor "Red" *>&1
+            Write-Host "Server IP: $($serverip) Port: $($Port)" -ForegroundColor "Red" *>&1
+            Write-Host "Data: $($Data)" -ForegroundColor "Red" *>&1
+            $flag = $false
+            break
+        }
+    }
+}
+

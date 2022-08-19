@@ -1,6 +1,0 @@
-$CURPATH = "C:\HPTAudit"
-$filelog = "$($CURPATH)\Mavex.log"
-$ip = $targetip.replace(".", "_")
-
-$port_ftp = "6886"
-

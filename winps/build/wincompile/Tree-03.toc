@@ -1,7 +1,0 @@
-('c:\\users\\tiend\\appdata\\local\\programs\\python\\python38\\lib\\site-packages\\pycparser-2.21-py3.8.egg',
- None,
- {'*.cp38-win_amd64.pyd', 'EGG-INFO', '*.pyc', '*.py', '*.pyw', '*.pyd'},
- 'DATA',
- [('pycparser\\_c_ast.cfg',
-   'c:\\users\\tiend\\appdata\\local\\programs\\python\\python38\\lib\\site-packages\\pycparser-2.21-py3.8.egg\\pycparser\\_c_ast.cfg',
-   'DATA')])

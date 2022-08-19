@@ -1,0 +1,5 @@
+.vscode
+database
+upload
+*.code-workspace
+*.zip
