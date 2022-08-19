@@ -1,5 +1,0 @@
-('c:\\users\\tiend\\appdata\\local\\programs\\python\\python38\\lib\\site-packages\\pyopenssl-22.0.0-py3.8.egg',
- None,
- {'*.py', '*.pyd', '*.cp38-win_amd64.pyd', 'EGG-INFO', '*.pyc', '*.pyw'},
- 'DATA',
- [])

@@ -3,3 +3,4 @@ database
 upload
 *.code-workspace
 *.zip
+__pycache__
